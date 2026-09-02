@@ -12,9 +12,10 @@ public class CargadorDatos implements Runnable {
   }
 
   /**
-   * Inicia hilo que carga los datos de la provincia <p> Carga en la provincia de la instancia los
-   * datos del .csv en la carpeta resources del proyecto con el mismo nombre que la provincia dada
-   * al objeto cuando se creó. </p>
+   * Inicia hilo que carga los datos de la provincia
+   *
+   * <p> Carga en la provincia de la instancia los datos del .csv en la carpeta resources del
+   * proyecto con el mismo nombre que la provincia dada al objeto cuando se creó. </p>
    */
   @Override
   public void run() {
