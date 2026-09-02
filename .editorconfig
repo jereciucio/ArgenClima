@@ -1,0 +1,43 @@
+# EditorConfig rules for Google Java Style Guide
+# https://editorconfig.org
+
+root = true
+
+# Default configuration for all files
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+tab_width = 2
+max_line_length = 100
+
+# Java source files (Google Java Style mandates 2-space indents & 100-char line limit)
+[*.java]
+indent_style = space
+indent_size = 2
+tab_width = 2
+max_line_length = 100
+
+# Build scripts & Project configuration
+[*.{xml,fxml}]
+indent_style = space
+indent_size = 2
+
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+[*.{gradle,kts}]
+indent_style = space
+indent_size = 2
+
+[*.properties]
+indent_style = space
+indent_size = 2
+
+# Markdown (preserve trailing spaces for line breaks)
+[*.md]
+trim_trailing_whitespace = false
