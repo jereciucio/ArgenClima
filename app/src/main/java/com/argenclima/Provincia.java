@@ -22,6 +22,16 @@ public class Provincia implements Lugar {
     localidades.put(localidad.getNombre(), localidad);
   }
 
+  /**
+   * Busca y retorna la localidad con el nombre dado.
+   *
+   * @param nombre el nombre de la localidad a obtener
+   * @return el objeto Localidad encontrado, o {@code null} si no se encontró
+   */
+  public Localidad getLocalidad(String nombre) {
+    return localidades.get(nombre);
+  }
+
   public double temperaturaPromedio(int anio) {
     double sum = 0;
     int  cantidad = 0;

@@ -8,9 +8,9 @@ public class Pais implements Lugar {
   private HashMap<String, Provincia> provincias;
   private String nombre;
 
-  public Pais(String nombre, HashMap<String, Provincia> provincias) {
+  public Pais(String nombre) {
     this.nombre = nombre;
-    this.provincias = provincias;
+    this.provincias = new HashMap<String, Provincia>();
   }
 
   public String getNombre() {
@@ -35,5 +35,19 @@ public class Pais implements Lugar {
       promedio = sum / cantidad;
     }
     return promedio;
+  }
+
+  /**
+   * Busca y retorna la provincia con el nombre dado.
+   *
+   * @param nombre el nombre de la provincia a obtener
+   * @return el objeto Provincia encontrado, o {@code null} si no se encontró
+   */
+  public Provincia getProvincia(String nombre) {
+    return provincias.get(nombre);
+  }
+
+  public void addProvincia(Provincia provincia) {
+    provincias.put(provincia.getNombre(), provincia);
   }
 }
