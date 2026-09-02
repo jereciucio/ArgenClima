@@ -4,11 +4,11 @@ import java.util.HashMap;
 public class Localidad implements Lugar{
 
   private String nombre;
-  HashMap<Integer,Double> temperaturasPorAnio;
+  private HashMap<Integer,Double> temperaturasPorAnio;
 
-  public Localidad(String nombre, HashMap<Integer,Double> temperaturas) {
+  public Localidad(String nombre) {
     this.nombre = nombre;
-    this.temperaturasPorAnio = temperaturas;
+    this.temperaturasPorAnio = new HashMap<Integer, Double>();
   }
 
   public String getNombre() {
@@ -17,6 +17,10 @@ public class Localidad implements Lugar{
 
   public void setNombre(String nombre) {
     this.nombre = nombre;
+  }
+
+  public void addTemperatura(int anio, double temp) {
+    temperaturasPorAnio.put(anio, temp);
   }
 
   public double temperaturaPromedio(int anio){

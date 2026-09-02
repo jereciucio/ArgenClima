@@ -5,9 +5,9 @@ public class Provincia implements Lugar {
   private String nombre;
   private HashMap<String, Localidad> localidades;
 
-  public Provincia(String nombre, HashMap<String, Localidad> localidades) {
+  public Provincia(String nombre) {
     this.nombre = nombre;
-    this.localidades = localidades;
+    this.localidades = new HashMap<String, Localidad>();
   }
 
   public void setNombre(String nombre) {
@@ -16,6 +16,10 @@ public class Provincia implements Lugar {
 
   public String getNombre() {
     return this.nombre;
+  }
+
+  public void addLocalidad(Localidad localidad) {
+    localidades.put(localidad.getNombre(), localidad);
   }
 
   public double temperaturaPromedio(int anio) {
