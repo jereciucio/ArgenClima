@@ -12,9 +12,10 @@ public class CargadorDatos implements Runnable {
   }
 
   /**
-   * Inicia hilo que carga los datos de la provincia <p> Carga en la provincia de la instancia los
-   * datos del .csv en la carpeta resources del proyecto con el mismo nombre que la provincia dada
-   * al objeto cuando se creó. </p>
+   * Inicia hilo que carga los datos de la provincia
+   *
+   * <p> Carga en la provincia de la instancia los datos del .csv en la carpeta resources del
+   * proyecto con el mismo nombre que la provincia dada al objeto cuando se creó. </p>
    */
   @Override
   public void run() {
@@ -60,6 +61,13 @@ public class CargadorDatos implements Runnable {
       } catch (Exception e) {
         System.out.println("Error al leer el archivo " + nombreArchivo);
       }
+    }
+
+    // Cerrar el archivo porque se me queja el IDE de memory leak
+    try {
+      lector.close();
+    } catch (Exception e) {
+      System.out.println("Error al cerrar el archivo" + nombreArchivo);
     }
   }
 }
