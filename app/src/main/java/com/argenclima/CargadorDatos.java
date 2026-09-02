@@ -62,5 +62,12 @@ public class CargadorDatos implements Runnable {
         System.out.println("Error al leer el archivo " + nombreArchivo);
       }
     }
+
+    // Cerrar el archivo porque se me queja el IDE de memory leak
+    try {
+      lector.close();
+    } catch (Exception e) {
+      System.out.println("Error al cerrar el archivo" + nombreArchivo);
+    }
   }
 }
