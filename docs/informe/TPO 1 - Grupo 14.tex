@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper]{report}
+\documentclass[11pt,a4paper]{article}
 
 % ---------- Idioma ----------
 \usepackage{polyglossia}
@@ -28,5 +28,30 @@
 \begin{document}
 
 \maketitle
+% escribir acá
+\section{Patrón Composite}
+
+Composite es un patrón de diseño estructural que permite componer objetos en
+estructuras de árbol y trabajar con esas estructuras como si fueran objetos
+individuales.
+
+\subsection{Nuestro Problema}
+
+La principal razón del uso del Patrón Composite es cuando el modelo central de
+nuestra aplicación se representa mediante la forma de un árbol.
+
+En nuestro problema nos encontramos con el objetivo de poder calcular la
+temperatura promedio del país, el cual contiene a sus provincias, las cuales
+contienen sus localidades, las cuales mantienen un registro de las temperaturas
+promedio por año.
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{arbol.png}
+\end{figure}
+
+
+
+
+\subsection{Solución}
+
 
 \end{document}
