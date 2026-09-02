@@ -1,0 +1,36 @@
+package com.argenclima;
+import java.util.HashMap;
+import java.util.Iterator;
+public class Provincia implements Lugar {
+  private String nombre;
+  private HashMap<String, Localidad> localidades;
+
+  public Provincia(String nombre, HashMap<String, Localidad> localidades) {
+    this.nombre = nombre;
+    this.localidades = localidades;
+  }
+
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+
+  public String getNombre() {
+    return this.nombre;
+  }
+
+  public double temperaturaPromedio(int anio) {
+    double sum = 0;
+    int  cantidad = 0;
+    double promedio = 0;
+    Iterator it = localidades.entrySet().iterator();
+    while (it.hasNext()) {
+      Localidad sig = (Localidad) it.next();
+      sum = sum + sig.temperaturaPromedio(anio);
+      cantidad++;
+    }
+    if (cantidad > 0) {
+      promedio = sum / cantidad;
+    }
+    return promedio;
+  }
+}
