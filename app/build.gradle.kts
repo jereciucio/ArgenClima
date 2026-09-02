@@ -19,6 +19,7 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation(libs.guava)
+    implementation("com.opencsv:opencsv:5.12.0")
 }
 
 testing {
