@@ -21,6 +21,18 @@ Dentro de la raíz del repositorio:
 
 En **Windows**, usar `gradlew.bat` en lugar de `./gradlew`.
 
+## Informe
+
+El informe en LaTeX se encuentra en [`docs/informe/`](docs/informe/). Para compilarlo:
+
+```bash
+cd docs/informe
+make        # compila el PDF con lualatex y latexmk
+make clean  # elimina los temporales y el PDF
+```
+
+Ver [`docs/informe/README.md`](docs/informe/README.md) para más detalles.
+
 ## Licencia
 
 Ver el archivo `LICENSE`.
