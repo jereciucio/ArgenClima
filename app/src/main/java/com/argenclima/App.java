@@ -9,6 +9,87 @@ public class App {
   }
 
   public static void main(String[] args) {
-    System.out.println(new App().getGreeting());
+    Menu menu = new Menu();
+    menu.mostrarMenu();
+  }
+
+}
+
+class Menu {
+  public Pais argentina;
+  public Provincia provinciaSeleccionada;
+
+  public Menu() {
+    this.argentina = new Pais("Argentina");
+  }
+
+  public void mostrarMenu() {
+    Scanner sc = new Scanner(System.in);
+    int opcion;
+    String nombreLugar;
+    System.out.println("Elegir una opcion");
+    System.out.println("1. Cargar datos");
+    System.out.println("2. Buscar Pais");
+    System.out.println("3. Buscar Provincia");
+    System.out.println("4. Buscar Localidad");
+    System.out.println("5.Salir");
+    opcion = sc.nextInt();
+    sc.nextLine();
+    switch (opcion) {
+      case 1:
+        realizarCargaDatos();
+        System.out.println("Datos cargados.");
+        mostrarMenu();
+        break;
+      case 2:
+        opcion = ingresarAnio();
+        System.out.println("La temperatura promedio del pais es: " + argentina.temperaturaPromedio(opcion));
+        mostrarMenu();
+        break;
+      case 3:
+        System.out.println("Ingrese el nombre de la provincia");
+        nombreLugar = ingresarNombreLugar();
+        provinciaSeleccionada = argentina.getProvincia(nombreLugar);
+        opcion = ingresarAnio();
+        System.out.println(
+            "La temperatura promedio de la provincia es: " + provinciaSeleccionada.temperaturaPromedio(opcion));
+        mostrarMenu();
+        break;
+      case 4:
+        System.out.println("Ingrese el nombre de la provincia de la localidad");
+        nombreLugar = ingresarNombreLugar();
+        provinciaSeleccionada = argentina.getProvincia(nombreLugar);
+        System.out.println("Ingrese el nombre de la localidad");
+        nombreLugar = ingresarNombreLugar();
+        opcion = ingresarAnio();
+        System.out.println("La temperatura promedio de la localidad es: "
+            + provinciaSeleccionada.getLocalidad(nombreLugar).temperaturaPromedio(opcion));
+        mostrarMenu();
+        break;
+      case 5:
+        System.out.println("Gracias por usar");
+        break;
+      default:
+        System.out.println("Opcion invalida");
+        mostrarMenu();
+        break;
+    }
+  }
+
+  public int ingresarAnio() {
+    Scanner sc = new Scanner(System.in);
+    int anio;
+    System.out.println("Ingrese el año para calcular la temperatura promedio");
+    anio = sc.nextInt();
+    sc.nextLine();
+    return anio;
+  }
+
+  public String ingresarNombreLugar() {
+    Scanner sc = new Scanner(System.in);
+    String nombreLugar;
+    nombreLugar = sc.nextLine();
+    return nombreLugar;
+  }
   }
 }
