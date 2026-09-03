@@ -127,7 +127,7 @@ subelementos.
 Normalmente, los componentes de las hojas acaban realizando la mayoría del
 trabajo real, ya que no tienen a nadie a quien delegarle el trabajo.
 
-\subsection{Execute Service}
+\section{Executor Service + Runnable}
 
 \textbf{ExecutorService} es una interfaz de Java que forma parte del
 \textbf{paquete java.util.concurrent.} Su función principal es gestionar de
@@ -143,7 +143,7 @@ solicitudes esperan en una cola de trabajo hasta que un hilo se libere.
 \textbf{\texttt{execute(Runnable)}}: Envía una tarea asíncrona para ser
 ejecutada por uno de los hilos disponibles sin bloquear el hilo principal.
 
-\subsubsection{Aplicación en nuestro dominio}
+\subsection{Aplicación en nuestro dominio}
 
 En nuestra clase principal, a medida que se instancia cada objeto
 \texttt{Provincia}, se encola su lectura mediante la llamada:
