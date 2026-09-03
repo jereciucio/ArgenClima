@@ -36,7 +36,7 @@ public class Provincia implements Lugar {
     double sum = 0;
     int  cantidad = 0;
     double promedio = 0;
-    Iterator it = localidades.entrySet().iterator();
+    Iterator it = localidades.values().iterator();
     while (it.hasNext()) {
       Localidad sig = (Localidad) it.next();
       sum = sum + sig.temperaturaPromedio(anio);
