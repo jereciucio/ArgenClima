@@ -44,31 +44,53 @@ class Menu {
           realizarCargaDatos();
           System.out.println("Datos cargados.");
           break;
-      case 2:
-        opcion = ingresarAnio();
-        System.out.println("La temperatura promedio del pais es: " + argentina.temperaturaPromedio(opcion));
-        mostrarMenu();
-        break;
-      case 3:
-        System.out.println("Ingrese el nombre de la provincia");
-        nombreLugar = ingresarNombreLugar();
-        provinciaSeleccionada = argentina.getProvincia(nombreLugar);
-        opcion = ingresarAnio();
-        System.out.println(
-            "La temperatura promedio de la provincia es: " + provinciaSeleccionada.temperaturaPromedio(opcion));
-        mostrarMenu();
-        break;
-      case 4:
-        System.out.println("Ingrese el nombre de la provincia de la localidad");
-        nombreLugar = ingresarNombreLugar();
-        provinciaSeleccionada = argentina.getProvincia(nombreLugar);
-        System.out.println("Ingrese el nombre de la localidad");
-        nombreLugar = ingresarNombreLugar();
-        opcion = ingresarAnio();
-        System.out.println("La temperatura promedio de la localidad es: "
-            + provinciaSeleccionada.getLocalidad(nombreLugar).temperaturaPromedio(opcion));
-        mostrarMenu();
-        break;
+        case 2:
+          opcion = ingresarAnio();
+          if (opcion >= 2021 && opcion <= 2026) {
+            System.out.println("La temperatura promedio del pais es: " + argentina.temperaturaPromedio(opcion));
+          } else {
+            System.out.println("No hay información del año correspondiente");
+          }
+          break;
+        case 3:
+          System.out.println("Ingrese el nombre de la provincia");
+          nombreLugar = ingresarNombreLugar();
+          provinciaSeleccionada = argentina.getProvincia(nombreLugar);
+          if (provinciaSeleccionada == null) {
+            System.out.println("No se encontro esa provincia, revisar si los datos fueron cargados o no existe");
+          } else {
+            opcion = ingresarAnio();
+            if (opcion >= 2021 && opcion <= 2026) {
+              System.out.println(
+                  "La temperatura promedio de la provincia es: " + provinciaSeleccionada.temperaturaPromedio(opcion));
+            } else {
+              System.out.println("No hay información del año correspondiente");
+            }
+          }
+          break;
+        case 4:
+          System.out.println("Ingrese el nombre de la provincia de la localidad");
+          nombreLugar = ingresarNombreLugar();
+          provinciaSeleccionada = argentina.getProvincia(nombreLugar);
+          if (provinciaSeleccionada == null) {
+            System.out.println("No se encontro esa provincia, revisar si los datos fueron cargados o no existe");
+          } else {
+            System.out.println("Ingrese el nombre de la localidad");
+            nombreLugar = ingresarNombreLugar();
+            localidad = provinciaSeleccionada.getLocalidad(nombreLugar);
+            if (localidad == null) {
+              System.out.println("No se encontro esa localidad, revisar si los datos fueron cargados o no existe");
+            } else {
+              opcion = ingresarAnio();
+              if (opcion >= 2021 && opcion <= 2026) {
+                System.out.println("La temperatura promedio de la localidad es: "
+                    + provinciaSeleccionada.getLocalidad(nombreLugar).temperaturaPromedio(opcion));
+              } else {
+                System.out.println("No hay información del año correspondiente");
+              }
+            }
+          }
+          break;
         case 5:
           System.out.println("Gracias por usar");
           break;
