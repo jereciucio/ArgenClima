@@ -90,7 +90,7 @@ class Menu {
     String nombreLugar;
     nombreLugar = sc.nextLine();
     return nombreLugar;
-}
+  }
 
   public void realizarCargaDatos() {
     ExecutorService pool = Executors.newFixedThreadPool(8);
@@ -101,6 +101,6 @@ class Menu {
       Provincia objetoProvincia = new Provincia(provincias[i]);
       argentina.addProvincia(objetoProvincia);
       pool.execute(new CargadorDatos(objetoProvincia));
-  }
+    }
   }
 }
