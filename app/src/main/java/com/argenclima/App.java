@@ -6,6 +6,8 @@ package com.argenclima;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 public class App {
   public static void main(String[] args) {
     Menu menu = new Menu();
@@ -124,6 +126,12 @@ class Menu {
       Provincia objetoProvincia = new Provincia(provincias[i]);
       argentina.addProvincia(objetoProvincia);
       pool.execute(new CargadorDatos(objetoProvincia));
+    }
+    pool.shutdown();
+    try {
+      pool.awaitTermination(4, TimeUnit.SECONDS);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
     }
   }
 }
