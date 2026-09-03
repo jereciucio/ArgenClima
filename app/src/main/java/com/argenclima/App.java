@@ -90,6 +90,17 @@ class Menu {
     String nombreLugar;
     nombreLugar = sc.nextLine();
     return nombreLugar;
+}
+
+  public void realizarCargaDatos() {
+    ExecutorService pool = Executors.newFixedThreadPool(8);
+    String[] provincias = { "Neuquén", "Buenos Aires", "Córdoba", "Santa Fe", "Mendoza", "Tucumán", "Salta", "Chaco",
+        "Formosa", "Jujuy", "La Pampa", "La Rioja", "San Juan", "San Luis", "Santiago del Estero", "Tierra del Fuego",
+        "Chubut", "Entre Ríos", "Misiones", "Río Negro", "Catamarca", "Corrientes", "Santa Cruz" };
+    for (int i = 0; i < provincias.length; i++) {
+      Provincia objetoProvincia = new Provincia(provincias[i]);
+      argentina.addProvincia(objetoProvincia);
+      pool.execute(new CargadorDatos(objetoProvincia));
   }
   }
 }
