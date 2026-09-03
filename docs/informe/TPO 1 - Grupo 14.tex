@@ -134,30 +134,44 @@ trabajo real, ya que no tienen a nadie a quien delegarle el trabajo.
 forma eficiente un grupo de hilos (pool) para ejecutar tareas concurrentes,
 evitando necesidad de crearlos y administrarlos manualmente uno por uno.
 
-La forma más sencilla de instanciarlo es mediante la clase de fábrica Executors:
+La forma más sencilla de instanciarlo es mediante la clase de fábrica \texttt{Executors}:
 
-\textbf{newFixedThreadPool(int n)}: Crea un pool con un número fijo de
+\textbf{\texttt{newFixedThreadPool(int n)}}: Crea un pool con un número fijo de
 hilos. Si todos los hilos están ocupados procesando una tarea, las nuevas
 solicitudes esperan en una cola de trabajo hasta que un hilo se libere.
 
-\textvf{execute(Runnable)}: Envía una tarea asíncrona para ser
+\textbf{\texttt{execute(Runnable)}}: Envía una tarea asíncrona para ser
 ejecutada por uno de los hilos disponibles sin bloquear el hilo principal.
 
 \subsubsection{Aplicación en nuestro dominio}
 
 En nuestra clase principal, a medida que se instancia cada objeto
-\textbf{Provincia}, se encola su lectura mediante la llamada:
+\texttt{Provincia}, se encola su lectura mediante la llamada:
 
 \textbf{pool.execute(new CargadorDatos(objetoProvincia))}
 
-Este método asigna la tarea \textbf{CargadorDatos} a un hilo libre del pool. El
-hilo ejecuta de manera asíncrona el método \textbf{run()}, leyendo el archivo
+Este método asigna la tarea \texttt{CargadorDatos} a un hilo libre del pool. El
+hilo ejecuta de manera asíncrona el método \texttt{run()}, leyendo el archivo
 CSV correspondiente en segundo plano de forma paralela a la carga de otras
 provincias.
 
-Finalmente, mediante \textbf{pool.shutdown()} y \textbf{pool.awaitTermination(4,
+Finalmente, mediante \texttt{pool.shutdown()} y \texttt{pool.awaitTermination(4,
 TimeUnit.SECONDS)}, el programa detiene la recepción de nuevas tareas y espera
 un tiempo a que todos los hilos finalicen la lectura antes de continuar con la
 ejecución.
+
+%Para crear un ExecutorService, lo más fácil es usar métodos de las clases
+%Executors.
+%
+%El método \textbf{newFixedThreadPool(int n)} crea un pool con un número fijo de
+%hilos. Si un hilo está ocupado, las tareas esperan en una cola.
+%
+%En nuestro dominio, sucede que a medida que se van creando los objetos
+%provincia, se invoca luego \textbf{pool.execute(new
+%CargadorDatos(objetoProvincia[i]))} el cual saca un hilo disponible de la pool,
+%y hace que el mismo ejecute de forma asíncrona el mensaje.
+%
+%el método \textbf{execute()} ejecuta una tarea mediante una interfaz Runnable
+%sin esperar un resultado.
 
 \end{document}
