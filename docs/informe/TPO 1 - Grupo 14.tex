@@ -41,32 +41,30 @@ El motivo principal para usar el Patrón Composite es que la estructura del
 dominio se representa mediante la forma de un árbol.
 
 Supongamos que el objetivo es calcular la temperatura promedio de un país. Este
-se compone de provincias, que a su vez contienen localidades, las cuales
+se compone de provincias, que a su vez contiene localidades, las cuales
 registran las temperaturas promedio anuales entre 2021 y 2026. Es decir, el país
 abarca provincias, las provincias abarcan localidades y las localidades guardan
-el historial de temperaturas.
+un historial de temperaturas.
 
 Ahora bien, supongamos que queremos desarrollar un sistema capaz de calcular la
-temperatura promedio de un año específico, ya sea para una provincia particular
+temperatura promedio de un año específico, ya sea para una provincia particular,
 o para un país entero.
 
 ¿De qué manera podríamos resolver este problema?
 
-\begin{figure}[h] \includegraphics[width=\textwidth]{treedark.png}
+\begin{figure}[h] \includegraphics[width=\textwidth]{arbol2.png}
 
 \end{figure}
 
 Podemos intentar la solución directa, fijarnos las localidades de cada provincia
-del país, repasar cada una de las temperaturas para un año determinado y
+del país, obtener cada una de las temperaturas para un año determinado y
 calcular el promedio total. En la vida real esto suena sencillo, pero en un
-programa no es tan simple como usar un solo bucle. Necesitaríamos conocer con
+programa no es tan simple como usar un único bucle. Necesitaríamos conocer con
 anticipación las clases Provincia y Localidad a iterar, el nivel de anidación
 que tienen y otros detalles. Todo esto hace que la opción directa se vuelva
-demasiado compleja.
-
+muy compleja de desarrollar.
 
 \subsection{Solución}
-
 
 El patrón Composite sugiere que trabajemos con Localidades, Provincias y el País a
 través de una interfaz común que declara un método para calcular la temperatura
@@ -75,21 +73,20 @@ total.
 ¿Cómo funcionaría este método? Para una localidad, sencillamente devuelve la
 temperatura promedio de la zona. Para una provincia, recorre cada localidad que
 abarca, pregunta su temperatura y devuelve la temperatura promedio anual de la
-provincia. Así hasta que se calcule el promedio anual de todas las provincias
-del país. Una provincia podría incluso añadir temperaturas adicionales a las
-temperaturas por localidad, como temperaturas.
+provincia. Así hasta calcular el promedio anual de todas las provincias del
+país. Una provincia podría incluso añadir temperaturas adicionales a las
+temperaturas por localidad como, por ejemplo, temperaturas de zonas que no sean
+localidades.
 
 El patrón Composite propone tratar a las Localidades, Provincias y al País
-mediante una interfaz común que declare un método para calcular la temperatura
-promedio.
+mediante una interfaz común que declare uno o varios métodos para calcular la
+temperatura promedio.
 
-¿Cómo funciona este método? En el caso de una localidad, simplemente devuelve
+¿Cómo funcionan estos método? En el caso de una localidad, simplemente devuelve
 una temperatura promedio anual de su registro. En una provincia, el método
 recorre cada localidad que la integra, consulta sus temperaturas y calcula el
 promedio anual de la provincia. El proceso se repite del mismo modo para el
-país, promediando los valores de todas sus provincias. Incluso, una provincia
-podría incorporar datos adicionales antes de devolver el resultado final, como
-mediciones de estaciones meteorológicas propias.
+país, promediando los valores de todas sus provincias.
 
 La gran ventaja de esta solución es que no hay que preocuparse por las clases
 concretas de los objetos que componen el árbol. No hay que saber si un objeto es
@@ -97,8 +94,70 @@ una localidad simple o una sofisticada provincia. Podemos tratar a todos los
 objetos por igual a través de una interfaz común. Cuando invocas un método, los
 propios objetos pasan la solicitud a lo largo del árbol.
 
+\subsection{Estructura}
+
 \begin{figure}[h] \includegraphics[width=\textwidth]{uml.png}
 
 \end{figure}
+
+La interfaz Componente "Lugar" describe las operaciones comunes tanto para
+elementos simples como complejos de la estructura. Define métodos como
+temperaturaPromedio(anio), asegurando que tanto las localidades como las
+provincias y el país compartan una misma forma de consultados.
+
+La hoja "Localidad" es el elemento básico del árbol que no contiene
+subelementos. Almacena de forma directa el registro de temperaturas anuales
+(temperaturaAnio) y realiza el trabajo real devolviendo el promedio
+correspondiente al año solicitado.
+
+El contenedor o compuesto "Provincia" y "Pais" son los elementos que contienen
+subelementos (hojas y otros componentes). Guardan colecciones de sus hijos
+(colLocalidad o colProvincia) y delegan en ellos la solicitud: al llamar a
+temperaturaPromedio(anio), consultan a cada uno de sus componentes hijos,
+procesan sus resultados y devuelven el promedio general.
+
+El cliente "Menu" trabaja con todos los elementos de la jerarquía exclusivamente
+a través de la interfaz Lugar. Esto le permite solicitar la temperatura promedio
+de un año específico de la misma manera, sin importar si interactúa con una
+localidad individual, una provincia o el país entero.
+
+País, Provincia y Localidad son los elementos básicos del árbol que no tienen
+subelementos.
+
+Normalmente, los componentes de las hojas acaban realizando la mayoría del
+trabajo real, ya que no tienen a nadie a quien delegarle el trabajo.
+
+\subsection{Execute Service}
+
+\textbf{ExecutorService} es una interfaz de Java que forma parte del
+\textbf{paquete java.util.concurrent.} Su función principal es gestionar de
+forma eficiente un grupo de hilos (pool) para ejecutar tareas concurrentes,
+evitando necesidad de crearlos y administrarlos manualmente uno por uno.
+
+La forma más sencilla de instanciarlo es mediante la clase de fábrica Executors:
+
+\textbf{newFixedThreadPool(int n)}: Crea un pool con un número fijo de
+hilos. Si todos los hilos están ocupados procesando una tarea, las nuevas
+solicitudes esperan en una cola de trabajo hasta que un hilo se libere.
+
+\textvf{execute(Runnable)}: Envía una tarea asíncrona para ser
+ejecutada por uno de los hilos disponibles sin bloquear el hilo principal.
+
+\subsubsection{Aplicación en nuestro dominio}
+
+En nuestra clase principal, a medida que se instancia cada objeto
+\textbf{Provincia}, se encola su lectura mediante la llamada:
+
+\textbf{pool.execute(new CargadorDatos(objetoProvincia))}
+
+Este método asigna la tarea \textbf{CargadorDatos} a un hilo libre del pool. El
+hilo ejecuta de manera asíncrona el método \textbf{run()}, leyendo el archivo
+CSV correspondiente en segundo plano de forma paralela a la carga de otras
+provincias.
+
+Finalmente, mediante \textbf{pool.shutdown()} y \textbf{pool.awaitTermination(4,
+TimeUnit.SECONDS)}, el programa detiene la recepción de nuevas tareas y espera
+un tiempo a que todos los hilos finalicen la lectura antes de continuar con la
+ejecución.
 
 \end{document}
