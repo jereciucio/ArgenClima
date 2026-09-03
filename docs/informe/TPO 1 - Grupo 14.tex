@@ -37,21 +37,64 @@ individuales.
 
 \subsection{Nuestro Problema}
 
-La principal razón del uso del Patrón Composite es cuando el modelo central de
-nuestra aplicación se representa mediante la forma de un árbol.
+El motivo principal para usar el Patrón Composite es que la estructura del
+dominio se representa mediante la forma de un árbol.
 
-En nuestro problema nos encontramos con el objetivo de poder calcular la
-temperatura promedio del país, el cual contiene a sus provincias, las cuales
-contienen sus localidades, las cuales mantienen un registro de las temperaturas
-promedio por año.
-\begin{figure}[h]
-\includegraphics[width=\textwidth]{arbol.png}
+Supongamos que el objetivo es calcular la temperatura promedio de un país. Este
+se compone de provincias, que a su vez contienen localidades, las cuales
+registran las temperaturas promedio anuales entre 2021 y 2026. Es decir, el país
+abarca provincias, las provincias abarcan localidades y las localidades guardan
+el historial de temperaturas.
+
+Ahora bien, supongamos que queremos desarrollar un sistema capaz de calcular la
+temperatura promedio de un año específico, ya sea para una provincia particular
+o para un país entero.
+
+¿De qué manera podríamos resolver este problema?
+
+\begin{figure}[h] \includegraphics[width=\textwidth]{treedark.png}
+
 \end{figure}
 
-
+Podemos intentar la solución directa, fijarnos las localidades de cada provincia
+del país, repasar cada una de las temperaturas para un año determinado y
+calcular el promedio total. En la vida real esto suena sencillo, pero en un
+programa no es tan simple como usar un solo bucle. Necesitaríamos conocer con
+anticipación las clases Provincia y Localidad a iterar, el nivel de anidación
+que tienen y otros detalles. Todo esto hace que la opción directa se vuelva
+demasiado compleja.
 
 
 \subsection{Solución}
 
+
+El patrón Composite sugiere que trabajemos con Localidades, Provincias y el País a
+través de una interfaz común que declara un método para calcular la temperatura
+total.
+
+¿Cómo funcionaría este método? Para una localidad, sencillamente devuelve la
+temperatura promedio de la zona. Para una provincia, recorre cada localidad que
+abarca, pregunta su temperatura y devuelve la temperatura promedio anual de la
+provincia. Así hasta que se calcule el promedio anual de todas las provincias
+del país. Una provincia podría incluso añadir temperaturas adicionales a las
+temperaturas por localidad, como temperaturas.
+
+El patrón Composite propone tratar a las Localidades, Provincias y al País
+mediante una interfaz común que declare un método para calcular la temperatura
+promedio.
+
+¿Cómo funciona este método? En el caso de una localidad, simplemente devuelve
+una temperatura promedio anual de su registro. En una provincia, el método
+recorre cada localidad que la integra, consulta sus temperaturas y calcula el
+promedio anual de la provincia. El proceso se repite del mismo modo para el
+país, promediando los valores de todas sus provincias. Incluso, una provincia
+podría incorporar datos adicionales antes de devolver el resultado final, como
+mediciones de estaciones meteorológicas propias.
+
+La gran ventaja de esta solución es que no hay que preocuparse por las clases
+concretas de los objetos que componen el árbol. No hay que saber si un objeto es
+una localidad simple o una sofisticada provincia. Podemos tratar a todos los
+objetos por igual a través de una interfaz común. Cuando invocas un método, los
+propios objetos pasan la solicitud a lo largo del árbol.
 
 \end{document}
